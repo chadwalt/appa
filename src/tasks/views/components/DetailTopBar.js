@@ -42,7 +42,11 @@ export default ({navigation, route, title, section, onRemove}) => {
             text: 'Confirm',
             onPress: () => {
               const screen = section === 'agenda' ? 'Today' : 'Backlog';
-              return onRemove(id).then(() => navigation.navigate(screen));
+              return onRemove(id)
+                .then(() => navigation.navigate(screen))
+                .catch((error) => {
+                  console.log('Failed to delete, please try again');
+                });
             },
           },
         ],
