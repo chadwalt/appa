@@ -50,11 +50,15 @@ describe('Time Log Selectors', () => {
     expect(getTimeSpentByDay.recomputations()).toBe(1);
     getTimeSpentByDay(mockState, '2020-05-08');
     expect(getTimeSpentByDay.recomputations()).toBe(1);
+    const action = addTimeLog(
+      '36212c03-040b-4139-867f-bd76485f4084',
+      moment().format(),
+    );
+    action.meta = {
+      event: {eventId: '36212c03-040b-4139-867f-bd76485f4123', sequenceNo: 0},
+    };
     const updatedState = Object.assign({}, mockState, {
-      logs: logs(
-        mockState.logs,
-        addTimeLog('36212c03-040b-4139-867f-bd76485f4084', moment().format()),
-      ),
+      logs: logs(mockState.logs, action),
     });
     getTimeSpentByDay(updatedState, '2020-05-08');
     expect(getTimeSpentByDay.recomputations()).toBe(2);

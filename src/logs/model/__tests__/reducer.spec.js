@@ -18,8 +18,12 @@ describe('logs reducer', function () {
     const taskId = '36212c03-040b-4139-867f-bd76485f4084';
     const startTime = moment();
     let uidRegex = /^([0-9a-fA-F]{8})-(([0-9a-fA-F]{4}-){3})([0-9a-fA-F]{12})$/i;
+    const action = addTimeLog(taskId, startTime);
+    action.meta = {
+      event: {eventId: '36212c03-040b-4139-867f-bd76485f4123', sequenceNo: 0},
+    };
 
-    const state = logs(expectedInitialState, addTimeLog(taskId, startTime));
+    const state = logs(expectedInitialState, action);
     expect(state.getById.size).toEqual(1);
     const key = state.getById.keys().next().value;
     expect(uidRegex.test(key)).toBe(true);

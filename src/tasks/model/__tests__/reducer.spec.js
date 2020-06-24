@@ -1,9 +1,15 @@
+import configureMockStore from 'redux-mock-store';
 import tasks from '../reducer';
 import {addTask, removeTask, startTask, updateTask} from '../commands';
 import {mockTasks} from '../../__tests__/fixtures';
+import eventMiddleware from '../../../weos/middleware/event-middleware';
+
+const middlewares = [eventMiddleware];
+const mockStore = configureMockStore(middlewares);
 
 describe('task reducer', function () {
   const expectedInitialState = {currentTask: null, getById: {}};
+  const store = mockStore(expectedInitialState);
 
   it('should return initial model', () => {
     expect(tasks(undefined, {})).toEqual(expectedInitialState);
@@ -11,13 +17,14 @@ describe('task reducer', function () {
 
   it('should add task to getById map with a uid as the key', () => {
     const mockInitialState = {currentTask: {}, getById: {}};
-    let state = tasks(
-      mockInitialState,
-      addTask({
-        title: 'sample task',
-        description: 'this is a basic task',
-      }),
-    );
+    const action = addTask({
+      title: 'sample task',
+      description: 'this is a basic task',
+    });
+    action.meta = {
+      event: {eventId: '36212c03-040b-4139-867f-bd76485f4123', sequenceNo: 0},
+    };
+    let state = tasks(mockInitialState, action);
 
     let uidRegex = /^([0-9a-fA-F]{8})-(([0-9a-fA-F]{4}-){3})([0-9a-fA-F]{12})$/i;
 

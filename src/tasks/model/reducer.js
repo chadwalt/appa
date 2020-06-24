@@ -16,7 +16,10 @@ const tasks = (state = {currentTask: null, getById: {}}, action) => {
       //add the new task
       const generatedId = uuidv4();
       getById = Object.assign({}, getById, {
-        [generatedId]: Object.assign({}, action.payload, {id: generatedId}),
+        [generatedId]: Object.assign({}, action.payload, {
+          id: generatedId,
+          meta: action.meta.event,
+        }),
       });
       //return the updated state
       return Object.assign({}, state, {getById: getById});
@@ -34,7 +37,13 @@ const tasks = (state = {currentTask: null, getById: {}}, action) => {
       Object.keys(state.getById).map((id) => {
         if (id === action.meta.id) {
           getById = Object.assign({}, getById, {
-            [id]: Object.assign({}, state.getById[id], action.payload),
+            [id]: Object.assign({}, state.getById[id], action.payload, {
+              meta: Object.assign(
+                {},
+                state.getById[id].meta,
+                action.meta.event,
+              ),
+            }),
           });
         } else {
           getById = Object.assign({}, getById, {
