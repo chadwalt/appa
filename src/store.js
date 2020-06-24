@@ -1,9 +1,11 @@
 import {applyMiddleware, createStore} from 'redux';
-import thunk from 'redux-thunk';
+import createSagaMiddleware from 'redux-saga';
 import AsyncStorage from '@react-native-community/async-storage';
 import {persistReducer, persistStore} from 'redux-persist';
 import rootReducer from './rootReducer';
 import {mapTransformer} from './persist-transformers/mapTransformer';
+import rootSaga from './rootSaga';
+import eventMiddleware from './weos/middleware/event-middleware';
 
 const initialState = {
   onboard: {onBoarded: false},
@@ -18,8 +20,15 @@ const initialState = {
     getById: new Map(),
     getByTime: new Map(),
   },
+  // weos: {
+  //   token: null,
+  //   user: null,
+  //   application_id: '747f53e4-8552-428b-a50d-945bbfff2bdd',
+  // },
 };
-const middlewares = [thunk];
+
+const sagaMiddleware = createSagaMiddleware();
+const middlewares = [eventMiddleware, sagaMiddleware];
 
 const persistConfig = {
   key: 'root',
@@ -34,6 +43,6 @@ const store = createStore(
   applyMiddleware(...middlewares),
 );
 
+sagaMiddleware.run(rootSaga);
 export const persistor = persistStore(store);
-
 export default store;
