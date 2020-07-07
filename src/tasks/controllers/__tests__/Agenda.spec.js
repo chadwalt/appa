@@ -37,13 +37,21 @@ describe('Agenda Controller', () => {
   });
 
   it('should return the current task being worked on', () => {
-    const mockInitialState = mockedState;
-    mockInitialState.tasks.currentTask =
-      mockInitialState.tasks.getById['36212c03-040b-4139-867f-bd76485f4084'];
+    const mockInitialState = {
+      ...mockedState,
+      tasks: {
+        ...mockedState.tasks,
+        currentTask: {
+          id: '36212c03-040b-4139-867f-bd76485f4084',
+          startTime: '2020-06-26T16:11:05.667Z',
+        },
+      },
+    };
     const controller = new AgendaController();
     const state = controller.configureState(mockInitialState);
-    expect(state.currentItem).toBe(
-      mockInitialState.tasks.getById['36212c03-040b-4139-867f-bd76485f4084'],
-    );
+    expect(state.currentItem).toEqual({
+      ...mockInitialState.tasks.getById['36212c03-040b-4139-867f-bd76485f4084'],
+      startTime: '2020-06-26T16:11:05.667Z',
+    });
   });
 });
