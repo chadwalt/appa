@@ -34,7 +34,7 @@ const logs = (
           id: generatedId,
           meta: {
             id: generatedId,
-            ...action.meta.event,
+            event: action.meta.event,
           },
         }),
       );
@@ -77,7 +77,7 @@ const logs = (
       getById.set(
         action.meta.id,
         Object.assign({}, log, action.payload, {
-          meta: Object.assign({}, log.meta, action.meta.event),
+          meta: Object.assign({}, log.meta, {event: action.meta.event}),
         }),
       );
 

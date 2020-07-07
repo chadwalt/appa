@@ -8,6 +8,12 @@ export const mockLogs = {
         id: 'f4cb9236-2df7-4abd-8c06-cb836865a1c3',
         startTime: '2020-05-08T10:17:44-04:00',
         taskId: '36212c03-040b-4139-867f-bd76485f4084',
+        meta: {
+          event: {
+            id: '36212c03-040b-4139-867f-bd76485f4016',
+            sequenceNo: 0,
+          },
+        },
       },
     ],
     [

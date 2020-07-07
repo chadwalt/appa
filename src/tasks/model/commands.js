@@ -11,6 +11,9 @@ export const removeTask = (taskId) => {
   return {
     type: REMOVE_TASK,
     payload: taskId,
+    meta: {
+      id: taskId,
+    },
   };
 };
 

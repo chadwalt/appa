@@ -29,5 +29,8 @@ export const removeTimeLog = (logId) => {
     payload: {
       id: logId,
     },
+    meta: {
+      id: logId,
+    },
   };
 };

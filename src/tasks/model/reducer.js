@@ -19,7 +19,9 @@ const tasks = (state = {currentTask: null, getById: {}}, action) => {
       getById = Object.assign({}, getById, {
         [generatedId]: Object.assign({}, action.payload, {
           id: generatedId,
-          meta: action.meta.event,
+          meta: {
+            event: action.meta.event,
+          },
         }),
       });
 
@@ -40,11 +42,9 @@ const tasks = (state = {currentTask: null, getById: {}}, action) => {
         if (id === action.meta.id) {
           getById = Object.assign({}, getById, {
             [id]: Object.assign({}, state.getById[id], action.payload, {
-              meta: Object.assign(
-                {},
-                state.getById[id].meta,
-                action.meta.event,
-              ),
+              meta: Object.assign({}, state.getById[id].meta, {
+                event: action.meta.event,
+              }),
             }),
           });
         } else {

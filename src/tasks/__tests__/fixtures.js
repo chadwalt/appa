@@ -16,6 +16,12 @@ export const mockTasks = {
       project: '32ebd0dd-8c83-4acf-a8d3-3f88c686c742',
       billable: false,
       agendas: [today.format('YYYY-MM-DD')],
+      meta: {
+        event: {
+          id: '36212c03-040b-4139-867f-bd76485f4095',
+          sequenceNo: 0,
+        },
+      },
     },
     '22dc4620-66c8-4c02-ac48-3c030d48bfee': {
       id: '22dc4620-66c8-4c02-ac48-3c030d48bfee',
