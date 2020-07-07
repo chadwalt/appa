@@ -1,13 +1,34 @@
-import {put, call, takeLatest} from 'redux-saga/effects';
-// import * as api from './api'; // TODO import api functionality
+import {call, takeLatest, select} from 'redux-saga/effects';
+import axios from 'axios';
+import moment from 'moment';
+import {AUTHORIZE_URL} from 'react-native-dotenv';
+
 import {ADD_LOG, UPDATE_LOG, REMOVE_LOG} from '../logs/model/commandTypes';
 
 export function* log(action) {
   try {
-    // TODO add api call to save event
+    const token = yield select((state) => state.weos.token);
+
+    if (!token) {
+      throw new Error('Missing auth token, not connect to WeOs');
+    }
+
+    action.meta = {
+      ...action.meta.event,
+      created: moment().format(),
+    };
+
+    const response = yield call(() =>
+      axios.post(`${AUTHORIZE_URL}/events/add`, action, {
+        headers: {
+          Authorization: `${token.token_type} ${token.access_token}`,
+        },
+      }),
+    );
+    return response.data;
   } catch (error) {
     // TODO queue event incase of failure
-    console.log('An error occurred please try again');
+    console.log('An error occurred', error);
   }
 }
 

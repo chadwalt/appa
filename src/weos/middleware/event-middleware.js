@@ -14,7 +14,7 @@ const eventMiddleware = (store) => (next) => (action) => {
     action.meta = {
       ...action.meta,
       event: {
-        eventId: uuidv4(),
+        id: uuidv4(),
         sequenceNo: 0,
       },
     };
@@ -23,8 +23,8 @@ const eventMiddleware = (store) => (next) => (action) => {
     action.meta = {
       ...action.meta,
       event: {
-        eventId: task?.meta?.eventId || uuidv4(),
-        sequenceNo: task?.meta?.sequenceNo + 1 || 0,
+        id: task?.meta?.event?.id || uuidv4(),
+        sequenceNo: task?.meta?.event?.sequenceNo + 1 || 0,
       },
     };
   } else if ([UPDATE_LOG, REMOVE_LOG].includes(action.type)) {
@@ -32,8 +32,8 @@ const eventMiddleware = (store) => (next) => (action) => {
     action.meta = {
       ...action.meta,
       event: {
-        eventId: log?.meta?.eventId || uuidv4(),
-        sequenceNo: log?.meta?.sequenceNo + 1 || 0,
+        id: log?.meta?.event?.id || uuidv4(),
+        sequenceNo: log?.meta?.event?.sequenceNo + 1 || 0,
       },
     };
   }
