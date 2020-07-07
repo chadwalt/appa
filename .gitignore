@@ -58,6 +58,9 @@ buck-out/
 # CocoaPods
 /ios/Pods/
 
+# Environment file
+.env
+
 # Test Coverage
 /coverage
 

@@ -75,7 +75,11 @@ const HomeScreen = ({
     if (!onBoarded) {
       return <Onboarding />;
     } else {
-      return <MainStackScreen />;
+      return (
+        <Sync>
+          <MainStackScreen />
+        </Sync>
+      );
     }
   };
 
